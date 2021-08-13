@@ -3,13 +3,13 @@ html { height: 100%; }
 #img-container {
 	display: flex;
 	flex-wrap: wrap;
-	padding: 5px;
+	padding: 10px;
 }
 
 .img-card {
-	width: 350px;
+	width: 23%;
 	padding: 10px;
 	border: 1px solid black;
 }
 
-.img-card > img { width: inherit; }
+.img-card > img { width: 100%; }
