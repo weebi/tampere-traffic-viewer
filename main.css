@@ -1,7 +1,8 @@
 html { height: 100%; }
 
 #img-container {
-	flex: wrap;
+	display: flex;
+	flex-wrap: wrap;
 	padding: 5px;
 }
 
