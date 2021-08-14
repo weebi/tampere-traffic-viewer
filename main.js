@@ -2,7 +2,6 @@ window.onload = async () => {
 	let data = await fetchData()
 	let imgcontainer = document.getElementById('img-container')
 
-	// trensi90-ipcam3 has a broken link so we'll ignore it for now.
 	data.results.map(item => imgcontainer.appendChild(buildCards(item)))
 
 	// Set interval to update images every five minutes
