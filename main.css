@@ -29,6 +29,18 @@ body {
 	background-color: #3B4252;
 }
 
+.img-card-green {
+	background-color: #2A792A;
+}
+
+.img-card-yellow {
+	background-color: #79792A;
+}
+
+.img-card-red {
+	background-color: #792A2A;
+}
+
 .img-card > p {
 	padding: 5px;
 }
