@@ -59,7 +59,7 @@ const buildCard = (item, ts) => {
 
 	// Replace image if it errors
 	card.childNodes[1].addEventListener("error", (event) =>  {
-		event.target.src = "https://via.placeholder.com/640x360?text=404"
+		event.target.src = "https://via.placeholder.com/640x360?text=Error"
 		event.target.parentNode.className = "img-card img-card-red" // not the best solution
 	})
 
