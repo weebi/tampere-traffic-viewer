@@ -22,28 +22,20 @@ body {
 .img-card {
 	border: 1px solid #2E3440;
 	border-radius: 10px;
-	width: 23%;
+	width: 23vw;
 	color: #D8DEE9;
 	margin: 10px;
 	overflow: hidden;
 	background-color: #3B4252;
 }
 
-.img-card-green {
-	background-color: #2A792A;
-}
+.img-card-green { background-color: #2A792A; }
 
-.img-card-yellow {
-	background-color: #79792A;
-}
+.img-card-yellow { background-color: #79792A; }
 
-.img-card-red {
-	background-color: #792A2A;
-}
+.img-card-red { background-color: #792A2A; }
 
-.img-card > p {
-	padding: 5px;
-}
+.img-card > p { padding: 5px; }
 
 .img-card > img { width: 100%; }
 
@@ -51,3 +43,5 @@ body {
 	color: #D8DEE9;
 	text-decoration: none;
 }
+
+.outdated { display: none; }

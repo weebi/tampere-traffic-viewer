@@ -18,49 +18,56 @@ const fetchData = async () => {
 	if(data.ok) {
 		return await data.json() 
 	} else {
-		alert("Error in fetchData()" + data.status)
+		alert("Error fetching data" + data.status)
 	}
 }
 
 const buildCard = (item, ts) => {
+	// Initialize card
 	let card = document.createElement('div')
 	let templateCard = document.getElementById("imgCardTemplate").content.cloneNode(true)
-	let location = item.location.geometry.coordinates
 	card.append(templateCard)
 
-	let camerats = Date.parse(item.cameraPresets[0].latestPictureTimestamp)
-	let tsdifference = ts - camerats
+	// Card elements
+	let cardImg = card.getElementsByTagName("img")[0]
+	let cardText = card.getElementsByTagName("a")[0]
+
+	let location = item.location.geometry.coordinates
+	let cameraPresets = item.cameraPresets[0]
+	let cameraTs = Date.parse(cameraPresets.latestPictureTimestamp)
+	let tsDifference = (ts - cameraTs)
 	let outdated
 
-	card.className = "img-card"
+	// Fill out the blanks
+	card.id = item.cameraId
+        card.className = "img-card"
 
-	if(tsdifference > 604800000) { // one week, camera is dead
-		card.className += " img-card-red"
+	cardImg.alt = item.cameraPresets[0].directionDescription
+	cardImg.src = item.cameraPresets[0].imageUrl
+
+	cardText.innerText = item.cameraName
+	cardText.href = `https://www.google.com/maps/search/?api=1&query=${location.lat},${location.lon}`
+	cardText.target = "_blank"
+
+	// Check if the images are outdated
+	// if tsDifference > 10 minutes, mark as yellow
+	// if tsDifference > week, mark as red
+	if(tsDifference > 600000) {
 		outdated = true
-	} else if(tsdifference > 600000) { // 10 minutes
-		card.className += " img-card-yellow"
-		outdated = true
+		card.className += (tsDifference > 604800000) ? " img-card-red" : " img-card-yellow"
+
+		if(outdated) {
+			card.className += " outdated" // currently completely hidden, but append required data anyway for later use
+	                let imgTime = new Date(cameraPresets.latestPictureTimestamp).toLocaleDateString()
+	                cardText.innerText += ` ${imgTime}`
+		}
 	} else {
 		card.className += " img-card-green"
-		outdated = false
 	}
 
-	// Fill out the blanks
-	card.childNodes[1].alt = item.cameraPresets[0].directionDescription
-	card.childNodes[1].src = item.cameraPresets[0].imageUrl
-	card.childNodes[3].childNodes[0].innerText = item.cameraName
-	
-	if(outdated) {
-		card.childNodes[3].childNodes[0].innerText += " " + new Date(item.cameraPresets[0].latestPictureTimestamp).toLocaleDateString()
-	}
-
-	card.childNodes[3].childNodes[0].href = `https://www.google.com/maps/search/?api=1&query=${location.lat},${location.lon}`
-	card.childNodes[3].childNodes[0].target = "_blank"
-
-	// Replace image if it errors
-	card.childNodes[1].addEventListener("error", (event) =>  {
-		event.target.src = "https://via.placeholder.com/640x360?text=Error"
-		event.target.parentNode.className = "img-card img-card-red" // not the best solution
+	// Hide image if it errors
+	cardImg.addEventListener("error", (event) =>  {
+		event.target.parentNode.style.display = "none"
 	})
 
 	return card
